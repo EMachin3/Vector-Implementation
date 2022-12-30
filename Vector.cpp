@@ -3,10 +3,27 @@ template<typename T, size_t S>
 class Vector
 {
 public:
+	Vector()
+	{
+		//std::cout << "Added!" << std::endl;
+		m_vector = new T[S];
+		displacement = 0;
+	}
+	~Vector()
+	{
+		//std::cout << "Deleted!" << std::endl;
+		delete[] m_vector;
+	}
 	const size_t size() const { return S + displacement; }
-	T& operator[] (T index)
+	T& operator[] (int index)
 	{
 		return m_vector[index];
+	}
+	void setVector(T*& vector, size_t size)
+	{
+		delete[] m_vector;
+		m_vector = vector;
+		displacement = size - S;
 	}
 	void push_back(T elem)
 	{
@@ -68,6 +85,6 @@ public:
 		}
 	}
 private:
-	int* m_vector = new int[S];
-	int displacement = 0;
+	T* m_vector;
+	int displacement;
 };
